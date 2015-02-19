@@ -1,2 +1,16 @@
 http://qiita.com/eielh/items/64e197f4f1eaf5ff6097
 Test KitchenではじめるChef入門
+
+最初からつまづいた。。。。
+
+$ chef generate cookbook ./site-cookbooks/example
+Compiling Cookbooks...
+Recipe: code_generator::cookbook
+  * directory[C:/tmp_vagrant/to_chef/for_miuma/site-cookbooks/example] action create
+    - create new directory C:/tmp_vagrant/to_chef/for_miuma/site-cookbooks/examplent/to_chef/for_miuma/site-cookbooks/example/recipes/default.rb from none to c73dcf
+    (diff output suppressed by config)
+
+  * cookbook_file[C:/tmp_vagrant/to_chef/for_miuma/site-cookbooks/example/.gitignore] action create
+    - create new file C:/tmp_vagrant/to_chef/for_miuma/site-cookbooks/example/.gitignore
+    - update content in file C:/tmp_vagrant/to_chef/for_miuma/site-cookbooks/example/.gitignore from none to 33d469
+    (diff output suppressed by config)
