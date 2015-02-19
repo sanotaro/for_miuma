@@ -14,3 +14,49 @@ Recipe: code_generator::cookbook
     - create new file C:/tmp_vagrant/to_chef/for_miuma/site-cookbooks/example/.gitignore
     - update content in file C:/tmp_vagrant/to_chef/for_miuma/site-cookbooks/example/.gitignore from none to 33d469
     (diff output suppressed by config)
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+kitchen で利用するvagrant box は以下からとってくるみたい
+    https://opscode-vm-bento.s3.amazonaws.com/
+で windows では　wget が無いので linux 上から wget https://opscode-vm-bento.s3.amazonaws.com/ したら xml だった。
+で 読みにくかったので xml を整形してくれる sublime text のパッケージ  Indent XML がすごかった
+インストールして
+key バインディング　{ "keys": ["ctrl+k", "ctrl+f"], "command": "auto_indent" } したら一発で整形された
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+##############################################################################################################
+chef generate cookbook　の　generate オプションは chef-dk の chef のみみたい。
+以下に詳細有
+http://www.creationline.com/lab/6654
+##############################################################################################################
+
+
+一応、最初のほうだけやってみる
+C:\tmp_vagrant\to_chef\for_miuma\site-cookbooks\example\recipes\hello.rb
+
+file 'hello.txt' do
+  content "Hello, World\n"
+end
+
+$ kitchen converge  ← テスト用の仮想サーバーへ cookbook を転送
+
+テスト用仮想サーバ側
+[C:example]
+$ kitchen list
+Instance           Driver   Provisioner  Last Action
+default-centos-65  Vagrant  ChefZero     Converged
+[C:example]
+$ kitchen login default-centos-65
+[vagrant@default-centos-65 ~]$ /opt/chef/bin/chef-apply /tmp/kitchen/cookbooks/example/recipes/hello.rb
+Recipe: (chef-apply cookbook)::(chef-apply recipe)
+  * file[hello.txt] action create
+    - create new file hello.txt
+    - update content in file hello.txt from none to 8663ba
+    --- hello.txt       2015-02-19 01:40:07.069771319 +0000
+    +++ ./.hello.txt20150219-2381-ejbr5j        2015-02-19 01:40:07.069771319 +0000
+    @@ -1 +1,2 @@
+    +Hello, World
+    - restore selinux security context
+[vagrant@default-centos-65 ~]$ cat hello.txt
+Hello, World
+[vagrant@default-centos-65 ~]$
